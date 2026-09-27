@@ -82,8 +82,16 @@ void main() {
     });
   });
 
+  // Tall test surface so lazily-built lists render every row.
+  void tall(WidgetTester t) {
+    t.view.physicalSize = const Size(1200, 4000);
+    t.view.devicePixelRatio = 1.0;
+    addTearDown(t.view.reset);
+  }
+
   group('widgets', () {
     testWidgets('home renders score, regime, disclaimer', (tester) async {
+      tall(tester);
       await tester.pumpWidget(MaterialApp(home: RootShell(repo: fakeRepo())));
       await tester.pumpAndSettle();
       expect(find.text('48'), findsOneWidget); // rounded score
@@ -92,18 +100,20 @@ void main() {
     });
 
     testWidgets('board lists all seven indicators', (tester) async {
+      tall(tester);
       await tester.pumpWidget(MaterialApp(home: RootShell(repo: fakeRepo())));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Board'));
+      await tester.tap(find.byIcon(Icons.table_rows));
       await tester.pumpAndSettle();
       expect(find.textContaining('MVRV'), findsWidgets);
       expect(find.textContaining('Hash Ribbons'), findsWidgets);
     });
 
     testWidgets('detail page shows education sections', (tester) async {
+      tall(tester);
       await tester.pumpWidget(MaterialApp(home: RootShell(repo: fakeRepo())));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Board'));
+      await tester.tap(find.byIcon(Icons.table_rows));
       await tester.pumpAndSettle();
       await tester.tap(find.textContaining('MVRV Z-Score').first);
       await tester.pumpAndSettle();
