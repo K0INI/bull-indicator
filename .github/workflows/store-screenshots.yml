@@ -34,7 +34,7 @@ jobs:
           (async () => {
             const b = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl'] });
             for (const st of sets) {
-              const p = await b.newPage({ viewport: { width: st.w, height: st.h }, deviceScaleFactor: st.s });
+              const p = await b.newPage({ viewport: { width: st.w, height: st.h }, deviceScaleFactor: st.s, locale: 'en-US', timezoneId: 'America/Detroit' });
               p.on('console', m => console.log('[page]', m.type(), m.text()));
               p.on('pageerror', e => console.log('[pageerror]', String(e)));
               await p.goto('http://localhost:8080/'); await p.waitForTimeout(15000);
