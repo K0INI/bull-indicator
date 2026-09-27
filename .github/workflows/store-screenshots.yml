@@ -1,0 +1,59 @@
+name: Store screenshots
+on:
+  workflow_dispatch: {}
+
+jobs:
+  shots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Build web preview of the app
+        working-directory: app
+        run: |
+          flutter create --org com.koini --project-name bull_indicator --platforms web .
+          rm -f test/widget_test.dart
+          flutter build web --release
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Capture screenshots
+        run: |
+          npm i -g playwright@1.56.0 http-server
+          npx playwright install --with-deps chromium
+          (cd app/build/web && http-server -p 8080 -s &) ; sleep 2
+          cat > shots.cjs <<'EOF'
+          const { chromium } = require(process.env.PW);
+          const sets = [
+            { name: 'play-phone', w: 360, h: 640, s: 3 },     // 1080x1920
+            { name: 'ios-6.5',   w: 428, h: 926, s: 3 },      // 1284x2778
+          ];
+          (async () => {
+            const b = await chromium.launch();
+            for (const st of sets) {
+              const p = await b.newPage({ viewport: { width: st.w, height: st.h }, deviceScaleFactor: st.s });
+              await p.goto('http://localhost:8080/'); await p.waitForTimeout(9000);
+              const tab = async (i) => { await p.mouse.click(st.w / 8 * (2 * i + 1), st.h - 36); await p.waitForTimeout(2500); };
+              await p.screenshot({ path: `out/${st.name}-1-home.png` });
+              await tab(1); await p.screenshot({ path: `out/${st.name}-2-board.png` });
+              await p.mouse.click(st.w / 2, 150); await p.waitForTimeout(2500);
+              await p.screenshot({ path: `out/${st.name}-3-detail.png` });
+              await p.goBack().catch(() => {}); await p.keyboard.press('Escape'); await p.waitForTimeout(800);
+              await p.goto('http://localhost:8080/'); await p.waitForTimeout(8000);
+              await tab(2); await p.screenshot({ path: `out/${st.name}-4-timeline.png` });
+              await tab(3); await p.screenshot({ path: `out/${st.name}-5-settings.png` });
+              await p.close();
+            }
+            await b.close();
+          })();
+          EOF
+          mkdir -p out
+          PW=$(npm root -g)/playwright node shots.cjs
+          ls -la out
+      - uses: actions/upload-artifact@v4
+        with:
+          name: store-screenshots
+          path: out/*.png
