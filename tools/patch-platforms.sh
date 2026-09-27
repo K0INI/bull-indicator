@@ -88,3 +88,5 @@ open(p, "w").write(src)
 PY
 
 echo "patch-platforms done"
+# flutter create adds a sample test that references a MyApp class we do not have
+rm -f test/widget_test.dart
