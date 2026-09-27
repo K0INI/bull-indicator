@@ -1,10 +1,10 @@
 {
- "generatedAt": "2026-09-27T22:00:14.070Z",
+ "generatedAt": "2026-09-27T22:01:43.403Z",
  "disclaimer": "Not financial advice. Historical indicators can fail. Past cycles do not guarantee future results.",
  "composite": {
   "score": 56.43,
   "regime": "Early Expansion",
-  "valuation": 45.59,
+  "valuation": 45.58,
   "trend": 67.28,
   "confidence": "High",
   "disagreement": null,
@@ -17,9 +17,9 @@
    "group": "valuation",
    "raw": 1.29,
    "unit": "× 200WMA",
-   "score": 46.55,
+   "score": 46.54,
    "state": "neutral",
-   "detail": "Price is 28.86% above the 200WMA ($65,702)",
+   "detail": "Price is 28.85% above the 200WMA ($65,702)",
    "asOf": "2026-09-27",
    "estimated": false,
    "sourceNote": "Computed from blockchain.info daily price history"
@@ -30,7 +30,7 @@
    "group": "valuation",
    "raw": 0.98,
    "unit": "z",
-   "score": 42.14,
+   "score": 42.13,
    "state": "neutral",
    "detail": "Z 0.98 (delayed reading 0.94 on 2026-09-20, adjusted for live price)",
    "asOf": "2026-09-27",
