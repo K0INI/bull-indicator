@@ -146,15 +146,17 @@ export function scoreHashRibbons(hashrate: number[], asOf: string): IndicatorRes
 
 /** 6. Bitcoin dominance: level + 90-day trend, structure context. */
 export function scoreDominance(domSeries: SeriesPoint[], asOf: string): IndicatorResult {
-  if (domSeries.length < 2) throw new Error("dominance: need history");
+  if (domSeries.length < 1) throw new Error("dominance: no data");
   const cur = domSeries[domSeries.length - 1].value;
-  const back = domSeries[Math.max(0, domSeries.length - 90)].value;
+  // History accumulates one point per daily run; the trend window grows to 90 days.
+  const days = Math.min(90, domSeries.length - 1);
+  const back = domSeries[domSeries.length - 1 - days].value;
   const change = cur - back;
   const score = curveScore(CURVES.dominanceTrend, change);
   return {
     key: "dominance", name: "Bitcoin Dominance", group: "trend",
     raw: r2(cur), unit: "%", score: r2(score), state: state(score),
-    detail: `${r2(cur)}% dominance, ${change >= 0 ? "+" : ""}${r2(change)} pts over 90 days`,
+    detail: `${r2(cur)}% dominance, ${change >= 0 ? "+" : ""}${r2(change)} pts over ${days} day${days === 1 ? "" : "s"}${days < 90 ? " (history building)" : ""}`,
     asOf, estimated: false, sourceNote: "CoinGecko global market data (history accumulated by pipeline)",
   };
 }
