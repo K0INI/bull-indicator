@@ -2,6 +2,9 @@ name: Store screenshots
 on:
   workflow_dispatch: {}
 
+permissions:
+  contents: write
+
 jobs:
   shots:
     runs-on: ubuntu-latest
@@ -59,3 +62,13 @@ jobs:
         with:
           name: store-screenshots
           path: out/*.png
+      - name: Save store assets to repo (for listing uploads)
+        run: |
+          python3 -m pip install --break-system-packages pillow
+          python3 tools/make_store_graphics.py
+          cp out/*.png store/assets/
+          git config user.name "bull-indicator-bot"
+          git config user.email "actions@github.com"
+          git add store/assets
+          git diff --cached --quiet || git commit -m "store: screenshots + graphics"
+          git push
