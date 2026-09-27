@@ -63,6 +63,8 @@ fi
 
 echo "== patching iOS =="
 sed -i.bak -E 's/PRODUCT_BUNDLE_IDENTIFIER = com\.koini\.bullIndicator;/PRODUCT_BUNDLE_IDENTIFIER = com.koini.bullindicator;/g' ios/Runner.xcodeproj/project.pbxproj && rm -f ios/Runner.xcodeproj/project.pbxproj.bak
+# iPhone-only for v1 (no iPad screenshots/review needed)
+sed -i.bak 's/TARGETED_DEVICE_FAMILY = "1,2";/TARGETED_DEVICE_FAMILY = 1;/g' ios/Runner.xcodeproj/project.pbxproj && rm -f ios/Runner.xcodeproj/project.pbxproj.bak
 # Display name + encryption declaration
 PLIST=ios/Runner/Info.plist
 plutil_replace() { python3 - "$PLIST" "$1" "$2" <<'PY'
