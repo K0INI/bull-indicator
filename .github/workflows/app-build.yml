@@ -64,6 +64,8 @@ jobs:
       - name: Scaffold platform projects
         working-directory: app
         run: |
+          brew install gnu-sed
+          export PATH="$(brew --prefix)/opt/gnu-sed/libexec/gnubin:$PATH"
           flutter create --org com.koini --project-name bull_indicator --platforms android,ios .
           bash ../tools/patch-platforms.sh
       - name: Icons
