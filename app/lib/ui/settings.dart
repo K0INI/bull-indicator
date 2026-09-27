@@ -74,12 +74,12 @@ class SettingsScreen extends StatelessWidget {
                 '$_siteBase/support.html'),
           ]),
         ),
-        Card(
+        const Card(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
+                children: [
                   Text('About',
                       style: TextStyle(
                           fontWeight: FontWeight.w700, color: Cp.accent)),
