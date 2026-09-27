@@ -1,4 +1,4 @@
-the floor does not always hold/// Plain-English education content for each indicator.
+/// Plain-English education content for each indicator.
 /// Sections: what, why, how to read, history & failure modes.
 library;
 
@@ -24,7 +24,7 @@ const Map<String, Education> education = {
     howToRead:
         'Look at the ratio of price to the 200WMA. Near 1.0× the market is at historical floor territory. Around 2× is a healthy bull. Above 3× the market has historically been near euphoric tops.',
     history:
-        'Failure modes: the floor is not guaranteed — in 2015 and 2022 price traded below the 200WMA for weeks. As Bitcoin matures, the multiples reached at tops have been shrinking, so old top thresholds may be too high for the ETF era.',
+        'Failure modes: the floor is not a sure thing — in 2015 and 2022 price traded below the 200WMA for weeks. As Bitcoin matures, the multiples reached at tops have been shrinking, so old top thresholds may be too high for the ETF era.',
   ),
   'mvrvZ': Education(
     what:
