@@ -1,4 +1,4 @@
-/// Plain-English education content for each indicator.
+the floor does not always hold/// Plain-English education content for each indicator.
 /// Sections: what, why, how to read, history & failure modes.
 library;
 
