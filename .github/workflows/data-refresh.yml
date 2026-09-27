@@ -50,6 +50,11 @@ jobs:
           mkdir -p _site
           cp -r site/. _site/
           cp -r data _site/data
+          npm i playwright@1.48.2
+          npx playwright install --with-deps chromium
+          node tools/og-card.mjs "$GITHUB_WORKSPACE/_site/og-card.png" "$GITHUB_WORKSPACE"
+          V=$(date -u +%Y%m%d%H%M)
+          sed -i "s#bull.koini.io/og-card.png#bull.koini.io/og-card.png?v=$V#g" _site/index.html _site/dashboard/index.html
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
