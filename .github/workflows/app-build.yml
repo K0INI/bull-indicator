@@ -50,6 +50,11 @@ jobs:
   ios:
     runs-on: macos-latest
     if: ${{ github.event_name == 'workflow_dispatch' }}
+    env:
+      HAS_ASC: ${{ secrets.ASC_KEY_P8 != '' }}
+      ASC_KEY_ID: M3X4Y4GQG8
+      ASC_ISSUER_ID: 5ace6157-4566-4a6b-b11f-3cb6dcf7acaf
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -61,21 +66,20 @@ jobs:
         run: |
           flutter create --org com.koini --project-name bull_indicator --platforms android,ios .
           bash ../tools/patch-platforms.sh
-      - name: Build unsigned IPA check
+      - name: Icons
         working-directory: app
-        run: flutter build ios --release --no-codesign \
-          --dart-define=BULLINDICATOR_DATA_BASE=${{ vars.DATA_BASE_URL }}/data \
-          --dart-define=BULLINDICATOR_SITE_BASE=${{ vars.DATA_BASE_URL }}
-      - name: Signed IPA + TestFlight upload (needs ASC API key secrets)
+        run: dart run flutter_launcher_icons
+      - name: Build iOS (no codesign)
+        working-directory: app
+        run: |
+          flutter build ios --release --no-codesign --build-number=${{ github.run_number }} \
+            --dart-define=BULLINDICATOR_DATA_BASE=${{ vars.DATA_BASE_URL }}/data \
+            --dart-define=BULLINDICATOR_SITE_BASE=${{ vars.DATA_BASE_URL }}
+      - name: Sign + upload to App Store Connect
         if: ${{ env.HAS_ASC == 'true' }}
-        working-directory: app
-        env:
-          HAS_ASC: ${{ secrets.ASC_KEY_P8 != '' }}
-          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
-          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
-          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        working-directory: app/ios
         run: |
           gem install fastlane -N
           mkdir -p fastlane
-          cp ../tools/Fastfile fastlane/Fastfile
+          cp ../../tools/Fastfile fastlane/Fastfile
           fastlane ios release
