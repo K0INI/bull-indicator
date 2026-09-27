@@ -1,0 +1,81 @@
+name: App build
+on:
+  push:
+    branches: [main]
+    paths: ["app/**", ".github/workflows/app-build.yml", "tools/**"]
+  workflow_dispatch: {}
+
+jobs:
+  check-and-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Scaffold platform projects
+        working-directory: app
+        run: |
+          flutter create --org com.koini --project-name bull_indicator --platforms android,ios .
+          bash ../tools/patch-platforms.sh
+      - name: Analyze
+        working-directory: app
+        run: flutter analyze
+      - name: Test
+        working-directory: app
+        run: flutter test
+      - name: Icons
+        working-directory: app
+        run: dart run flutter_launcher_icons
+      - name: Build AAB (release, signed when keystore present)
+        working-directory: app
+        env:
+          KEYSTORE_B64: ${{ secrets.UPLOAD_KEYSTORE_B64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > android/app/upload-keystore.jks
+            printf 'storePassword=%s\nkeyPassword=%s\nkeyAlias=upload\nstoreFile=upload-keystore.jks\n' \
+              "$KEYSTORE_PASSWORD" "$KEYSTORE_PASSWORD" > android/key.properties
+          fi
+          flutter build appbundle --release \
+            --dart-define=BULLINDICATOR_DATA_BASE=${{ vars.DATA_BASE_URL }}/data \
+            --dart-define=BULLINDICATOR_SITE_BASE=${{ vars.DATA_BASE_URL }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bull-indicator-aab
+          path: app/build/app/outputs/bundle/release/app-release.aab
+
+  ios:
+    runs-on: macos-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - name: Scaffold platform projects
+        working-directory: app
+        run: |
+          flutter create --org com.koini --project-name bull_indicator --platforms android,ios .
+          bash ../tools/patch-platforms.sh
+      - name: Build unsigned IPA check
+        working-directory: app
+        run: flutter build ios --release --no-codesign \
+          --dart-define=BULLINDICATOR_DATA_BASE=${{ vars.DATA_BASE_URL }}/data \
+          --dart-define=BULLINDICATOR_SITE_BASE=${{ vars.DATA_BASE_URL }}
+      - name: Signed IPA + TestFlight upload (needs ASC API key secrets)
+        if: ${{ env.HAS_ASC == 'true' }}
+        working-directory: app
+        env:
+          HAS_ASC: ${{ secrets.ASC_KEY_P8 != '' }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          gem install fastlane -N
+          mkdir -p fastlane
+          cp ../tools/Fastfile fastlane/Fastfile
+          fastlane ios release

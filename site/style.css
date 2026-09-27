@@ -1,0 +1,7 @@
+@font-face{font-family:Jost;font-weight:300;font-display:swap;src:url(fonts/Jost_300Light.ttf) format("truetype")}
+@font-face{font-family:Jost;font-weight:500;font-display:swap;src:url(fonts/Jost_500Medium.ttf) format("truetype")}
+body{font-family:"Jost",-apple-system,Segoe UI,Roboto,sans-serif;font-weight:300;max-width:720px;margin:0 auto;padding:40px 20px;line-height:1.65;color:#FAFAF7;background:#0A0B0D}
+h1,h2{font-weight:400;letter-spacing:.2px}h2{color:#3ECF8E;font-size:1.15rem;margin-top:2rem}
+a{color:#3ECF8E}strong{font-weight:500}
+header{display:flex;align-items:center;gap:12px;margin-bottom:24px}header img{height:44px}
+footer{margin-top:48px;font-size:13px;color:#8E98AB;border-top:1px solid #232A40;padding-top:16px}

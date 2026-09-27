@@ -1,0 +1,30 @@
+# Fastlane: signed iOS build + TestFlight upload using an App Store Connect API key.
+# Required env: ASC_KEY_ID, ASC_ISSUER_ID, ASC_KEY_P8 (contents of the .p8 file)
+default_platform(:ios)
+
+platform :ios do
+  desc "Build signed IPA and upload to TestFlight"
+  lane :release do
+    api_key = app_store_connect_api_key(
+      key_id: ENV["ASC_KEY_ID"],
+      issuer_id: ENV["ASC_ISSUER_ID"],
+      key_content: ENV["ASC_KEY_P8"]
+    )
+    setup_ci
+    # Create/fetch signing cert + provisioning profile via the API key
+    cert(api_key: api_key)
+    sigh(api_key: api_key, app_identifier: "com.koini.bullindicator")
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "ios/Runner.xcodeproj",
+      profile_name: lane_context[SharedValues::SIGH_NAME],
+      code_sign_identity: "Apple Distribution"
+    )
+    build_app(
+      workspace: "ios/Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store"
+    )
+    upload_to_testflight(api_key: api_key, skip_waiting_for_build_processing: true)
+  end
+end

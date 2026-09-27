@@ -1,0 +1,29 @@
+{
+ "generatedAt": "2026-09-27T06:00:00.000Z",
+ "disclaimer": "Not financial advice. Historical indicators can fail. Past cycles do not guarantee future results.",
+ "composite": {
+  "score": 47.9,
+  "regime": "Early Expansion",
+  "valuation": 41.2,
+  "trend": 54.6,
+  "confidence": "High",
+  "disagreement": null,
+  "anchorsVersion": "1.0.0"
+ },
+ "indicators": [
+  {"key": "wma200", "name": "200-Week Moving Average", "group": "valuation", "raw": 1.62, "unit": "× 200WMA", "score": 59.8, "state": "neutral", "detail": "Price is 62% above the 200WMA ($52,140)", "asOf": "2026-09-27", "estimated": false, "sourceNote": "Computed from blockchain.info daily price history"},
+  {"key": "mvrvZ", "name": "MVRV Z-Score", "group": "valuation", "raw": 0.94, "unit": "z", "score": 41.5, "state": "neutral", "detail": "Z 0.94 (delayed reading 0.94 on 2026-09-20, adjusted for live price)", "asOf": "2026-09-27", "estimated": true, "sourceNote": "BGeometrics free API (7-day delayed) + published live-price adjustment"},
+  {"key": "puell", "name": "Puell Multiple", "group": "valuation", "raw": 0.71, "unit": "×", "score": 30.5, "state": "bear", "detail": "Puell 0.71 (delayed 0.72 on 2026-09-20, price-adjusted)", "asOf": "2026-09-27", "estimated": true, "sourceNote": "BGeometrics free API (7-day delayed) + published live-price adjustment"},
+  {"key": "goldenCross", "name": "Golden Cross (50/200 SMA)", "group": "trend", "raw": 2.1, "unit": "% spread", "score": 59.5, "state": "neutral", "detail": "Golden cross active: 50-day SMA is 2.1% above the 200-day", "asOf": "2026-09-27", "estimated": false, "sourceNote": "Computed from blockchain.info daily price history"},
+  {"key": "hashRibbons", "name": "Hash Ribbons (30/60 SMA)", "group": "trend", "raw": 1.4, "unit": "% spread", "score": 56.3, "state": "neutral", "detail": "30-day hash-rate SMA is 1.4% above the 60-day", "asOf": "2026-09-27", "estimated": false, "sourceNote": "Computed from blockchain.info hash-rate series"},
+  {"key": "dominance", "name": "Bitcoin Dominance", "group": "trend", "raw": 57.2, "unit": "%", "score": 46.0, "state": "neutral", "detail": "57.2% dominance, -0.9 pts over 90 days", "asOf": "2026-09-27", "estimated": false, "sourceNote": "CoinGecko global market data (history accumulated by pipeline)"},
+  {"key": "volSent", "name": "Volume + Sentiment", "group": "trend", "raw": 74, "unit": "F&G", "score": 56.6, "state": "neutral", "detail": "Fear & Greed 74, volume at 31st percentile of past year (30d avg $38B)", "asOf": "2026-09-27", "estimated": false, "sourceNote": "alternative.me Fear & Greed + CoinGecko volume"}
+ ],
+ "deltas": {"d1": 0.8, "d7": -2.3},
+ "attribution": [
+  "MVRV Z-Score & Puell Multiple: BGeometrics (bitcoin-data.com), delayed free data with published live-price adjustment",
+  "Price & hash rate: blockchain.info public charts API",
+  "Dominance & volume: CoinGecko public API",
+  "Fear & Greed Index: alternative.me"
+ ]
+}
