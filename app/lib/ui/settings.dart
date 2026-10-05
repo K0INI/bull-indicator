@@ -6,7 +6,7 @@ import 'theme.dart';
 
 const _siteBase = String.fromEnvironment(
   'BULLINDICATOR_SITE_BASE',
-  defaultValue: 'https://k0ini.github.io/bull-indicator',
+  defaultValue: 'https://bull.koini.io',
 );
 
 class SettingsScreen extends StatelessWidget {
