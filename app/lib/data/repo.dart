@@ -8,7 +8,7 @@ import '../models.dart';
 class Endpoints {
   static const base = String.fromEnvironment(
     'BULLINDICATOR_DATA_BASE',
-    defaultValue: 'https://k0ini.github.io/bull-indicator/data',
+    defaultValue: 'https://bull.koini.io/data',
   );
   static Uri latest() => Uri.parse('$base/latest.json');
   static Uri history() => Uri.parse('$base/history.json');
