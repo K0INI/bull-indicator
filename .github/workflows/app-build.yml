@@ -40,8 +40,8 @@ jobs:
               "$KEYSTORE_PASSWORD" "$KEYSTORE_PASSWORD" > android/key.properties
           fi
           flutter build appbundle --release \
-            --dart-define=BULLINDICATOR_DATA_BASE=${{ vars.DATA_BASE_URL }}/data \
-            --dart-define=BULLINDICATOR_SITE_BASE=${{ vars.DATA_BASE_URL }}
+            --dart-define=BULLINDICATOR_DATA_BASE=${{ vars.DATA_BASE_URL || 'https://bull.koini.io' }}/data \
+            --dart-define=BULLINDICATOR_SITE_BASE=${{ vars.DATA_BASE_URL || 'https://bull.koini.io' }}
       - uses: actions/upload-artifact@v4
         with:
           name: bull-indicator-aab
@@ -75,8 +75,8 @@ jobs:
         working-directory: app
         run: |
           flutter build ios --release --no-codesign --build-number=${{ github.run_number }} \
-            --dart-define=BULLINDICATOR_DATA_BASE=${{ vars.DATA_BASE_URL }}/data \
-            --dart-define=BULLINDICATOR_SITE_BASE=${{ vars.DATA_BASE_URL }}
+            --dart-define=BULLINDICATOR_DATA_BASE=${{ vars.DATA_BASE_URL || 'https://bull.koini.io' }}/data \
+            --dart-define=BULLINDICATOR_SITE_BASE=${{ vars.DATA_BASE_URL || 'https://bull.koini.io' }}
       - name: Sign + upload to App Store Connect
         if: ${{ env.HAS_ASC == 'true' }}
         working-directory: app/ios
