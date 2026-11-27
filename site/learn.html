@@ -57,6 +57,7 @@ header img{width:34px;height:34px}
   padding-top:8px;border-top:1px solid var(--line)}
 .card{background:var(--panel);border-radius:16px;padding:20px 22px;margin-bottom:14px;scroll-margin-top:16px}
 .card h2{font-weight:400;font-size:21px;letter-spacing:.01em;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.card h2 a{color:inherit;text-decoration:none}.card h2 a:hover{color:var(--bull)}
 .card h2 .fam{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bull);
   border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-weight:400}
 .block{margin-top:14px}
@@ -111,7 +112,7 @@ footer .d{color:var(--haze);margin-bottom:10px}
   <h2 class="section-h">VALUATION — PRICE VS LONG-TERM VALUE</h2>
 
   <article class="card" id="wma200">
-    <h2>200-Week Moving Average <span class="fam">Valuation</span></h2>
+    <h2><a href="learn/wma200.html">200-Week Moving Average</a> <span class="fam">Valuation</span></h2>
     <div class="block"><div class="t">What it is</div><p>The 200-week moving average is the average Bitcoin closing price over the past 200 weeks — roughly one full four-year cycle. It smooths out all short-term noise into one slow-moving line.</p></div>
     <div class="block"><div class="t">Why it matters</div><p>Historically it has acted as the floor of Bitcoin bear markets. Price touching or dipping below the 200WMA has marked major cycle bottoms (2015, 2018, 2022), while price stretching to multiples of it has marked overheated tops.</p></div>
     <div class="block"><div class="t">How to read it</div><p>Look at the ratio of price to the 200WMA. Near 1.0× the market is at historical floor territory. Around 2× is a healthy bull. Above 3× the market has historically been near euphoric tops.</p></div>
@@ -119,7 +120,7 @@ footer .d{color:var(--haze);margin-bottom:10px}
   </article>
 
   <article class="card" id="mvrvZ">
-    <h2>MVRV Z-Score <span class="fam">Valuation</span></h2>
+    <h2><a href="learn/mvrvZ.html">MVRV Z-Score</a> <span class="fam">Valuation</span></h2>
     <div class="block"><div class="t">What it is</div><p>MVRV compares Bitcoin's market value (price × supply) to its realized value — the price at which each coin last moved on-chain, which approximates the market's aggregate cost basis. The Z-Score normalizes this gap by its historical volatility.</p></div>
     <div class="block"><div class="t">Why it matters</div><p>It measures how far price is stretched above or below what holders actually paid. Extreme highs mean large unrealized profit (historically distribution zones); extreme lows mean widespread unrealized loss (historically accumulation zones).</p></div>
     <div class="block"><div class="t">How to read it</div><p>Below 0 has marked deep-value bottoms. Around 2 is a mid-cycle level. Historically, readings above roughly 5–7 flagged cycle tops within weeks. In this app the free data source lags about a week, so today's value is estimated from the delayed reading plus live price — the method is published in the methodology below.</p></div>
@@ -127,7 +128,7 @@ footer .d{color:var(--haze);margin-bottom:10px}
   </article>
 
   <article class="card" id="puell">
-    <h2>Puell Multiple <span class="fam">Valuation</span></h2>
+    <h2><a href="learn/puell.html">Puell Multiple</a> <span class="fam">Valuation</span></h2>
     <div class="block"><div class="t">What it is</div><p>The Puell Multiple divides the daily USD value of newly issued bitcoin (miner block rewards) by the 365-day average of that value.</p></div>
     <div class="block"><div class="t">Why it matters</div><p>It views cycles through miner revenue. When miners earn far more than the yearly norm, markets have historically been near tops; when they earn far less, near bottoms (miner capitulation).</p></div>
     <div class="block"><div class="t">How to read it</div><p>Below about 0.5 has marked bottom zones. Around 1.0 is neutral. Above roughly 4 has marked overheated tops. Halvings mechanically cut issuance in half, which shifts the multiple — compare within an era, not across halvings blindly.</p></div>
@@ -137,7 +138,7 @@ footer .d{color:var(--haze);margin-bottom:10px}
   <h2 class="section-h">TREND — DIRECTION OF THE MARKET</h2>
 
   <article class="card" id="goldenCross">
-    <h2>Golden Cross <span class="fam">Trend</span></h2>
+    <h2><a href="learn/goldenCross.html">Golden Cross</a> <span class="fam">Trend</span></h2>
     <div class="block"><div class="t">What it is</div><p>The golden cross is the moment the 50-day moving average crosses above the 200-day moving average. The opposite is a death cross.</p></div>
     <div class="block"><div class="t">Why it matters</div><p>It is the classic, simple trend-confirmation signal: it says the intermediate trend has turned up (or down) with enough persistence to move long averages.</p></div>
     <div class="block"><div class="t">How to read it</div><p>We show the percentage spread between the two averages. Positive and widening = confirmed uptrend. Negative and widening = confirmed downtrend. Crosses near zero can whipsaw.</p></div>
@@ -145,7 +146,7 @@ footer .d{color:var(--haze);margin-bottom:10px}
   </article>
 
   <article class="card" id="hashRibbons">
-    <h2>Hash Ribbons <span class="fam">Trend</span></h2>
+    <h2><a href="learn/hashRibbons.html">Hash Ribbons</a> <span class="fam">Trend</span></h2>
     <div class="block"><div class="t">What it is</div><p>Hash Ribbons compare the 30-day and 60-day moving averages of Bitcoin's network hash rate — the total computing power miners point at the chain.</p></div>
     <div class="block"><div class="t">Why it matters</div><p>Miners are forced sellers with real-world costs. When hash rate contracts, weak miners are capitulating — historically near bottoms. When the 30-day average recovers above the 60-day, the worst has typically passed.</p></div>
     <div class="block"><div class="t">How to read it</div><p>Ribbon spread below zero = miner stress. The classic "buy signal" in the original study fires when the 30d recrosses above the 60d after a capitulation; we flag that recovery moment on the chart.</p></div>
@@ -153,7 +154,7 @@ footer .d{color:var(--haze);margin-bottom:10px}
   </article>
 
   <article class="card" id="dominance">
-    <h2>Bitcoin Dominance <span class="fam">Trend</span></h2>
+    <h2><a href="learn/dominance.html">Bitcoin Dominance</a> <span class="fam">Trend</span></h2>
     <div class="block"><div class="t">What it is</div><p>Bitcoin dominance is Bitcoin's share of total cryptocurrency market capitalization.</p></div>
     <div class="block"><div class="t">Why it matters</div><p>Cycles have a rotation rhythm: capital concentrates in Bitcoin early (dominance rises), then spills into altcoins as risk appetite peaks (dominance falls). Late-cycle dominance collapse has coincided with market tops.</p></div>
     <div class="block"><div class="t">How to read it</div><p>We score the 90-day trend. Rising dominance usually marks early/mid cycle; falling dominance with an overheated market suggests late-cycle alt euphoria. Dominance is structure context, not a standalone signal.</p></div>
@@ -161,7 +162,7 @@ footer .d{color:var(--haze);margin-bottom:10px}
   </article>
 
   <article class="card" id="volSent">
-    <h2>Volume &amp; Sentiment <span class="fam">Trend</span></h2>
+    <h2><a href="learn/volSent.html">Volume &amp; Sentiment</a> <span class="fam">Trend</span></h2>
     <div class="block"><div class="t">What it is</div><p>A blend of the Crypto Fear &amp; Greed Index (60%) and where current trading volume sits versus the past year (40%).</p></div>
     <div class="block"><div class="t">Why it matters</div><p>Sentiment and participation confirm or contradict price. Sustained greed with expanding volume is classic bull behavior; greed on thin volume is fragile; extreme fear has historically marked opportunity zones.</p></div>
     <div class="block"><div class="t">How to read it</div><p>The Fear &amp; Greed component is already 0–100 (extreme fear → extreme greed). The volume component is a percentile: 90 means today's volume is higher than 90% of days in the past year.</p></div>

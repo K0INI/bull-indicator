@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>KŌINI Bull Indicator — Hash Ribbons (30/60 SMA)</title>
+<meta name="description" content="The 30- vs 60-day hash-rate averages — flags miner capitulation and recovery.">
+<meta name="theme-color" content="#0A0B0D">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="KŌINI Bull Indicator">
+<meta property="og:title" content="Hash Ribbons (30/60 SMA) — KŌINI Bull Indicator">
+<meta property="og:description" content="The 30- vs 60-day hash-rate averages — flags miner capitulation and recovery.">
+<meta property="og:image" content="https://bull.koini.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon.png">
+<link rel="preload" href="../fonts/Jost_300Light.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="../fonts/JetBrainsMono_400Regular.ttf" as="font" type="font/ttf" crossorigin>
+<style>
+@font-face{font-family:Jost;font-weight:200;font-display:swap;src:url(../fonts/Jost_200ExtraLight.ttf) format("truetype")}
+@font-face{font-family:Jost;font-weight:300;font-display:swap;src:url(../fonts/Jost_300Light.ttf) format("truetype")}
+@font-face{font-family:Jost;font-weight:500;font-display:swap;src:url(../fonts/Jost_500Medium.ttf) format("truetype")}
+@font-face{font-family:"JetBrains Mono";font-weight:400;font-display:swap;src:url(../fonts/JetBrainsMono_400Regular.ttf) format("truetype")}
+:root{--noir:#0A0B0D;--panel:#14192C;--raised:#1C2238;--line:#232A40;--snow:#FAFAF7;--haze:#C3CCD8;--dim:#8E98AB;--bull:#3ECF8E;--bear:#F0506E;--caution:#FBBF24;--mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+*{box-sizing:border-box;margin:0}
+html{background:var(--noir);color:var(--snow);-webkit-text-size-adjust:100%}
+body{font-family:Jost,system-ui,-apple-system,Segoe UI,sans-serif;font-weight:300;line-height:1.6;min-height:100vh;padding:max(16px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
+.wrap{max-width:680px;margin:0 auto}
+a{color:var(--bull)}a:focus-visible{outline:2px solid var(--bull);outline-offset:3px}
+header{display:flex;align-items:center;gap:12px;padding:8px 4px 12px}
+header img{width:auto;height:34px}
+.brand{font-size:20px;letter-spacing:.06em;font-weight:300}
+.brand b{font-weight:300;letter-spacing:.18em}.brand span{color:var(--dim)}
+.back{margin-left:auto;font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-decoration:none}
+.crumb{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--dim);padding:6px 4px 2px}
+.crumb a{color:var(--dim);text-decoration:none}
+h1{font-weight:300;font-size:clamp(28px,7vw,38px);letter-spacing:.01em;line-height:1.12;padding:6px 4px 6px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+h1 .fam{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--bull);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-weight:400}
+.card{background:var(--panel);border-radius:16px;padding:20px 22px;margin-top:14px}
+.block{margin-top:16px}.block:first-child{margin-top:0}
+.block .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.block p{font-size:15.5px;color:var(--haze)}
+.block.history .t{color:var(--caution)}
+.block.history{border-left:3px solid var(--line);padding-left:14px}
+.more{margin-top:16px;font-size:14.5px}
+.disc{background:var(--raised);border-radius:14px;padding:16px 18px;margin-top:16px;font-size:13.5px;color:var(--haze)}
+.disc b{color:var(--caution);font-weight:500}
+footer{color:var(--dim);font-size:12.5px;text-align:center;padding:28px 8px 8px}
+footer a{color:var(--dim)}footer .d{color:var(--haze);margin-bottom:10px}
+@media (min-width:640px){body{padding-top:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="../lockup-white.png" alt="" height="34">
+    <div class="brand"><b>KŌINI</b> <span>Bull Indicator</span></div>
+    <a class="back" href="../dashboard/">← Dashboard</a>
+  </header>
+  <div class="crumb"><a href="../learn.html">All indicators</a> / Hash Ribbons (30/60 SMA)</div>
+  <h1>Hash Ribbons (30/60 SMA) <span class="fam">Trend</span></h1>
+  <article class="card">
+    <div class="block"><div class="t">What it is</div><p>Hash Ribbons compare the 30-day and 60-day moving averages of Bitcoin’s network hash rate — the total computing power miners point at the chain.</p></div>
+    <div class="block"><div class="t">Why it matters</div><p>Miners are forced sellers with real-world costs. When hash rate contracts, weak miners are capitulating — historically near bottoms. When the 30-day average recovers above the 60-day, the worst has typically passed.</p></div>
+    <div class="block"><div class="t">How to read it</div><p>Ribbon spread below zero = miner stress. The classic “buy signal” in the original study fires when the 30d recrosses above the 60d after a capitulation; we flag that recovery moment on the chart.</p></div>
+    <div class="block history"><div class="t">History &amp; failure modes</div><p>Hash rate migrations (China’s 2021 mining ban) produced capitulation signals unrelated to price cycles. Hardware cycles and energy prices also move hash rate independently of the market.</p></div>
+    <p class="more"><a href="../learn.html#methodology">How this feeds the Cycle Score →</a></p>
+  </article>
+  <div class="disc"><b>Not financial advice.</b> Historical indicators can fail. Past cycles do not guarantee future results. This is educational market context only.</div>
+  <footer>
+    <p class="d">Read the cycle. · Not financial advice.</p>
+    <p><a href="../dashboard/">Dashboard</a> · <a href="../learn.html">All indicators</a> · <a href="../privacy.html">Privacy</a> · <a href="../terms.html">Terms</a> · <a href="../support.html">Support</a></p>
+  </footer>
+</div>
+</body>
+</html>
