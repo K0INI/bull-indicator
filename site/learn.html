@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>KŌINI Bull Indicator — Learn the Indicators</title>
+<meta name="description" content="Plain-English explanations of the seven indicators behind the KŌINI Bull Indicator Cycle Score, plus the full methodology. Educational only — not financial advice.">
+<meta name="theme-color" content="#0A0B0D">
+<meta name="color-scheme" content="dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="KŌINI Bull Indicator">
+<meta property="og:title" content="KŌINI Bull Indicator — Learn the Indicators">
+<meta property="og:description" content="What each indicator means, why it matters, how to read it, and how it has failed. Plus the full Cycle Score methodology.">
+<meta property="og:image" content="https://bull.koini.io/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KŌINI Bull Indicator — Learn the Indicators">
+<meta name="twitter:description" content="What each indicator means, why it matters, how to read it, and how it has failed.">
+<link rel="icon" href="favicon.png">
+<link rel="preload" href="fonts/Jost_300Light.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="fonts/JetBrainsMono_400Regular.ttf" as="font" type="font/ttf" crossorigin>
+<style>
+@font-face{font-family:Jost;font-weight:200;font-display:swap;src:url(fonts/Jost_200ExtraLight.ttf) format("truetype")}
+@font-face{font-family:Jost;font-weight:300;font-display:swap;src:url(fonts/Jost_300Light.ttf) format("truetype")}
+@font-face{font-family:Jost;font-weight:500;font-display:swap;src:url(fonts/Jost_500Medium.ttf) format("truetype")}
+@font-face{font-family:"JetBrains Mono";font-weight:400;font-display:swap;src:url(fonts/JetBrainsMono_400Regular.ttf) format("truetype")}
+:root{
+  --noir:#0A0B0D;--panel:#14192C;--raised:#1C2238;--line:#232A40;
+  --snow:#FAFAF7;--haze:#C3CCD8;--dim:#8E98AB;
+  --bull:#3ECF8E;--bear:#F0506E;--caution:#FBBF24;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0}
+html{background:var(--noir);color:var(--snow);-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:Jost,system-ui,-apple-system,Segoe UI,sans-serif;font-weight:300;line-height:1.6;min-height:100vh;
+  padding:max(16px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom))}
+.wrap{max-width:760px;margin:0 auto}
+a{color:var(--bull)}
+a:focus-visible{outline:2px solid var(--bull);outline-offset:3px}
+header{display:flex;align-items:center;gap:12px;padding:8px 4px 10px}
+header img{width:34px;height:34px}
+.brand{font-size:20px;letter-spacing:.06em;font-weight:300}
+.brand b{font-weight:300;letter-spacing:.18em}
+.brand span{color:var(--dim)}
+.back{margin-left:auto;font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-decoration:none}
+.lead{padding:6px 4px 4px}
+.lead h1{font-weight:300;font-size:clamp(26px,6vw,34px);letter-spacing:.01em;line-height:1.15;margin-bottom:10px}
+.lead p{color:var(--haze);font-size:15.5px;max-width:60ch}
+.toc{background:var(--panel);border-radius:16px;padding:16px 18px;margin:18px 0}
+.toc .k{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--dim);margin-bottom:12px}
+.toc ul{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px}
+.toc li{font-size:14.5px}
+.toc a{text-decoration:none}
+.toc .fam{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);
+  grid-column:1/-1;margin-top:6px}
+.toc .fam:first-of-type{margin-top:0}
+.section-h{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--dim);margin:30px 4px 12px;
+  padding-top:8px;border-top:1px solid var(--line)}
+.card{background:var(--panel);border-radius:16px;padding:20px 22px;margin-bottom:14px;scroll-margin-top:16px}
+.card h2{font-weight:400;font-size:21px;letter-spacing:.01em;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.card h2 .fam{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bull);
+  border:1px solid var(--line);border-radius:6px;padding:2px 7px;font-weight:400}
+.block{margin-top:14px}
+.block .t{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.block p{font-size:15px;color:var(--haze)}
+.block.history .t{color:var(--caution)}
+.block.history{border-left:3px solid var(--line);padding-left:14px;margin-left:-2px}
+.method p{font-size:15px;color:var(--haze);margin-bottom:12px}
+.method .regimes{list-style:none;padding:0;margin:4px 0 12px;font-family:var(--mono);font-size:13px}
+.method .regimes li{display:flex;gap:12px;padding:6px 0;border-top:1px solid var(--line);color:var(--haze)}
+.method .regimes li:first-child{border-top:0}
+.method .regimes b{color:var(--snow);font-weight:400;min-width:7ch}
+.disc{background:var(--raised);border-radius:14px;padding:16px 18px;margin:20px 0 6px;font-size:14px;color:var(--haze)}
+.disc b{color:var(--caution);font-weight:500}
+footer{color:var(--dim);font-size:12.5px;text-align:center;padding:28px 8px 8px}
+footer a{color:var(--dim)}
+footer .d{color:var(--haze);margin-bottom:10px}
+@media (max-width:520px){.toc ul{grid-template-columns:1fr}}
+@media (min-width:640px){body{padding-top:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <img src="lockup-white.png" alt="" width="34" height="34" style="width:auto;height:34px">
+    <div class="brand"><b>KŌINI</b> <span>Bull Indicator</span></div>
+    <a class="back" href="dashboard/">← Dashboard</a>
+  </header>
+
+  <div class="lead">
+    <h1>Learn the indicators</h1>
+    <p>The Cycle Score blends seven classic Bitcoin market-cycle indicators into one 0–100 reading. Here is what each one measures, why it matters, how to read it, and how it has failed before — in plain English, with nothing hidden.</p>
+  </div>
+
+  <nav class="toc" aria-label="Contents">
+    <div class="k">ON THIS PAGE</div>
+    <ul>
+      <li class="fam">Valuation · price vs long-term value</li>
+      <li><a href="#wma200">200-Week Moving Average</a></li>
+      <li><a href="#mvrvZ">MVRV Z-Score</a></li>
+      <li><a href="#puell">Puell Multiple</a></li>
+      <li class="fam">Trend · direction of the market</li>
+      <li><a href="#goldenCross">Golden Cross</a></li>
+      <li><a href="#hashRibbons">Hash Ribbons</a></li>
+      <li><a href="#dominance">Bitcoin Dominance</a></li>
+      <li><a href="#volSent">Volume &amp; Sentiment</a></li>
+      <li class="fam">Reference</li>
+      <li><a href="#methodology">How the Cycle Score works</a></li>
+    </ul>
+  </nav>
+
+  <h2 class="section-h">VALUATION — PRICE VS LONG-TERM VALUE</h2>
+
+  <article class="card" id="wma200">
+    <h2>200-Week Moving Average <span class="fam">Valuation</span></h2>
+    <div class="block"><div class="t">What it is</div><p>The 200-week moving average is the average Bitcoin closing price over the past 200 weeks — roughly one full four-year cycle. It smooths out all short-term noise into one slow-moving line.</p></div>
+    <div class="block"><div class="t">Why it matters</div><p>Historically it has acted as the floor of Bitcoin bear markets. Price touching or dipping below the 200WMA has marked major cycle bottoms (2015, 2018, 2022), while price stretching to multiples of it has marked overheated tops.</p></div>
+    <div class="block"><div class="t">How to read it</div><p>Look at the ratio of price to the 200WMA. Near 1.0× the market is at historical floor territory. Around 2× is a healthy bull. Above 3× the market has historically been near euphoric tops.</p></div>
+    <div class="block history"><div class="t">History &amp; failure modes</div><p>The floor is not guaranteed — in 2015 and 2022 price traded below the 200WMA for weeks. As Bitcoin matures, the multiples reached at tops have been shrinking, so old top thresholds may be too high for the ETF era.</p></div>
+  </article>
+
+  <article class="card" id="mvrvZ">
+    <h2>MVRV Z-Score <span class="fam">Valuation</span></h2>
+    <div class="block"><div class="t">What it is</div><p>MVRV compares Bitcoin's market value (price × supply) to its realized value — the price at which each coin last moved on-chain, which approximates the market's aggregate cost basis. The Z-Score normalizes this gap by its historical volatility.</p></div>
+    <div class="block"><div class="t">Why it matters</div><p>It measures how far price is stretched above or below what holders actually paid. Extreme highs mean large unrealized profit (historically distribution zones); extreme lows mean widespread unrealized loss (historically accumulation zones).</p></div>
+    <div class="block"><div class="t">How to read it</div><p>Below 0 has marked deep-value bottoms. Around 2 is a mid-cycle level. Historically, readings above roughly 5–7 flagged cycle tops within weeks. In this app the free data source lags about a week, so today's value is estimated from the delayed reading plus live price — the method is published in the methodology below.</p></div>
+    <div class="block history"><div class="t">History &amp; failure modes</div><p>Top thresholds have declined every cycle (2021's second peak topped near Z≈4, below the classic 7). Exchange-held and ETF-held coins blur realized value. Treat zones, not exact numbers, as the signal.</p></div>
+  </article>
+
+  <article class="card" id="puell">
+    <h2>Puell Multiple <span class="fam">Valuation</span></h2>
+    <div class="block"><div class="t">What it is</div><p>The Puell Multiple divides the daily USD value of newly issued bitcoin (miner block rewards) by the 365-day average of that value.</p></div>
+    <div class="block"><div class="t">Why it matters</div><p>It views cycles through miner revenue. When miners earn far more than the yearly norm, markets have historically been near tops; when they earn far less, near bottoms (miner capitulation).</p></div>
+    <div class="block"><div class="t">How to read it</div><p>Below about 0.5 has marked bottom zones. Around 1.0 is neutral. Above roughly 4 has marked overheated tops. Halvings mechanically cut issuance in half, which shifts the multiple — compare within an era, not across halvings blindly.</p></div>
+    <div class="block history"><div class="t">History &amp; failure modes</div><p>Each halving changes the baseline, and fee revenue (not counted in classic Puell) matters more over time. Post-2024-halving readings run structurally lower than older cycles.</p></div>
+  </article>
+
+  <h2 class="section-h">TREND — DIRECTION OF THE MARKET</h2>
+
+  <article class="card" id="goldenCross">
+    <h2>Golden Cross <span class="fam">Trend</span></h2>
+    <div class="block"><div class="t">What it is</div><p>The golden cross is the moment the 50-day moving average crosses above the 200-day moving average. The opposite is a death cross.</p></div>
+    <div class="block"><div class="t">Why it matters</div><p>It is the classic, simple trend-confirmation signal: it says the intermediate trend has turned up (or down) with enough persistence to move long averages.</p></div>
+    <div class="block"><div class="t">How to read it</div><p>We show the percentage spread between the two averages. Positive and widening = confirmed uptrend. Negative and widening = confirmed downtrend. Crosses near zero can whipsaw.</p></div>
+    <div class="block history"><div class="t">History &amp; failure modes</div><p>It is a lagging signal — crosses fire well after turns — and choppy markets produce false crosses (e.g., mid-2021). Use it for confirmation, not prediction.</p></div>
+  </article>
+
+  <article class="card" id="hashRibbons">
+    <h2>Hash Ribbons <span class="fam">Trend</span></h2>
+    <div class="block"><div class="t">What it is</div><p>Hash Ribbons compare the 30-day and 60-day moving averages of Bitcoin's network hash rate — the total computing power miners point at the chain.</p></div>
+    <div class="block"><div class="t">Why it matters</div><p>Miners are forced sellers with real-world costs. When hash rate contracts, weak miners are capitulating — historically near bottoms. When the 30-day average recovers above the 60-day, the worst has typically passed.</p></div>
+    <div class="block"><div class="t">How to read it</div><p>Ribbon spread below zero = miner stress. The classic "buy signal" in the original study fires when the 30d recrosses above the 60d after a capitulation; we flag that recovery moment on the chart.</p></div>
+    <div class="block history"><div class="t">History &amp; failure modes</div><p>Hash rate migrations (China's 2021 mining ban) produced capitulation signals unrelated to price cycles. Hardware cycles and energy prices also move hash rate independently of the market.</p></div>
+  </article>
+
+  <article class="card" id="dominance">
+    <h2>Bitcoin Dominance <span class="fam">Trend</span></h2>
+    <div class="block"><div class="t">What it is</div><p>Bitcoin dominance is Bitcoin's share of total cryptocurrency market capitalization.</p></div>
+    <div class="block"><div class="t">Why it matters</div><p>Cycles have a rotation rhythm: capital concentrates in Bitcoin early (dominance rises), then spills into altcoins as risk appetite peaks (dominance falls). Late-cycle dominance collapse has coincided with market tops.</p></div>
+    <div class="block"><div class="t">How to read it</div><p>We score the 90-day trend. Rising dominance usually marks early/mid cycle; falling dominance with an overheated market suggests late-cycle alt euphoria. Dominance is structure context, not a standalone signal.</p></div>
+    <div class="block history"><div class="t">History &amp; failure modes</div><p>Stablecoins and new token supply distort the denominator over the years, so absolute levels are not comparable across eras — the trend matters more than the level.</p></div>
+  </article>
+
+  <article class="card" id="volSent">
+    <h2>Volume &amp; Sentiment <span class="fam">Trend</span></h2>
+    <div class="block"><div class="t">What it is</div><p>A blend of the Crypto Fear &amp; Greed Index (60%) and where current trading volume sits versus the past year (40%).</p></div>
+    <div class="block"><div class="t">Why it matters</div><p>Sentiment and participation confirm or contradict price. Sustained greed with expanding volume is classic bull behavior; greed on thin volume is fragile; extreme fear has historically marked opportunity zones.</p></div>
+    <div class="block"><div class="t">How to read it</div><p>The Fear &amp; Greed component is already 0–100 (extreme fear → extreme greed). The volume component is a percentile: 90 means today's volume is higher than 90% of days in the past year.</p></div>
+    <div class="block history"><div class="t">History &amp; failure modes</div><p>Sentiment can stay at extremes far longer than expected — "extreme greed" persisted for months in early 2021 and early 2024. Volume data quality varies across exchanges.</p></div>
+  </article>
+
+  <h2 class="section-h">REFERENCE</h2>
+
+  <article class="card method" id="methodology">
+    <h2>How the Cycle Score works</h2>
+    <div class="block">
+      <p>KŌINI Bull Indicator computes one Cycle Score (0–100) from the seven indicators above. Each indicator maps its raw value to a 0–100 score through fixed, published anchor points (piecewise-linear). The anchors are versioned; the live build uses anchors v1.0.0, listed on each indicator page in the app.</p>
+      <p><b style="color:var(--snow);font-weight:500">Grouping.</b> Valuation = 200WMA, MVRV Z-Score, Puell Multiple. Trend = Golden Cross, Hash Ribbons, Dominance, Volume &amp; Sentiment.</p>
+      <p><b style="color:var(--snow);font-weight:500">Formula.</b> Cycle Score = 50% × average(Valuation scores) + 50% × average(Trend scores). The formula is never hidden.</p>
+      <p><b style="color:var(--snow);font-weight:500">Regimes.</b></p>
+      <ul class="regimes">
+        <li><b>0–20</b> Capitulation — deep value</li>
+        <li><b>21–40</b> Accumulation</li>
+        <li><b>41–60</b> Early Expansion</li>
+        <li><b>61–75</b> Mid Bull</li>
+        <li><b>76–88</b> Late Bull — elevated risk</li>
+        <li><b>89–100</b> Euphoria — historically dangerous</li>
+      </ul>
+      <p><b style="color:var(--snow);font-weight:500">Confidence.</b> Reflects data freshness: High = all seven inputs ≤48h old; Medium = 5–6 fresh; Low = fewer. A disagreement note appears when the Valuation and Trend group scores differ by 25+ points.</p>
+      <p><b style="color:var(--snow);font-weight:500">Delayed data.</b> The MVRV Z-Score and Puell Multiple source (BGeometrics free tier) lags about 7 days. Because realized value and yearly issuance averages move slowly, we adjust the delayed reading with the live price (MVRV Z: z + Δprice% × max(|z|,1); Puell: value × price ratio) and label these values "estimated". If any source fails, the app shows the last good data with a stale banner — it never invents numbers.</p>
+      <p><b style="color:var(--snow);font-weight:500">Data &amp; cadence.</b> Sources: BGeometrics (bitcoin-data.com), blockchain.info, CoinGecko, alternative.me. Scores update daily around 06:00 UTC.</p>
+    </div>
+  </article>
+
+  <div class="disc">
+    <b>Not financial advice.</b> Historical indicators can fail. Past cycles do not guarantee future results. Everything on this page is educational market context only. KŌINI Bull Indicator is not a wallet, exchange, broker, or investment advisor and never tells you to buy or sell.
+  </div>
+
+  <footer>
+    <p class="d">Read the cycle. · Not financial advice.</p>
+    <p><a href="dashboard/">Dashboard</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="support.html">Support</a></p>
+  </footer>
+</div>
+</body>
+</html>
